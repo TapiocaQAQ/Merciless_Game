@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	void Start () {
 		Cursor.lockState = CursorLockMode.Locked;
 		distToGround = GetComponent<Collider>().bounds.extents.y;
+		transform.position = new Vector3(Config.playerSpawnX, transform.position.y, Config.playerSpawnZ);
 	}
 	
 	// Update is called once per frame
