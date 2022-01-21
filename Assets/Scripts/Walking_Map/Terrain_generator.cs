@@ -10,17 +10,22 @@ public class Terrain_generator : MonoBehaviour
     int size;
     Vector2 playerSpawnCoord;
 
+    public GameObject tree01_prefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        float maxHeight = -1, minHeight = 1;
-
-        // Generate new height map for the terrain 
         terrainData = terrain.terrainData;
         size = terrainData.heightmapResolution;
         heightsMap = terrainData.GetHeights(0, 0, size, size);
         playerSpawnCoord = WorldPos2TerrainCoord(terrain, new Vector3(Config.playerSpawnX, 0, Config.playerSpawnZ));
 
+        GenerateTerrain();
+        GenerateTrees();
+    }
+
+    // Generate new height map for the terrain 
+    public void GenerateTerrain(){
         for(int x=0; x<size; x++) for(int y=0; y<size; y++){
             // apply perlin noise to the entire map
             heightsMap[x, y] = Mathf.PerlinNoise(x*1.0f/size, y*1.0f/size) * 0.1f;
@@ -35,32 +40,17 @@ public class Terrain_generator : MonoBehaviour
                 heightsMap[x, y] *= (dist2spawn-5)/10;
                 heightsMap[x, y] += 0.05f;
             }
-
-            if(heightsMap[x, y] > maxHeight) maxHeight = heightsMap[x, y];
-            if(heightsMap[x, y] < minHeight) minHeight = heightsMap[x, y];
         }
         terrain.terrainData.SetHeights(0, 0, heightsMap);
+   }
 
-        // Color the terrain 
-        Color[,] colorMap= new Color[size, size];
-        float sandHeight = minHeight + (maxHeight - minHeight)*0.3f;
-        float treeHeight = minHeight + (maxHeight - minHeight)*0.6f;
+   
+    public void GenerateTrees(){
         for(int x=0; x<size; x++) for(int y=0; y<size; y++){
-            if(heightsMap[x, y] < sandHeight){
-                colorMap[x, y] = new Color(1.0f, 1.0f, 0.3f);
-            }else if(heightsMap[x, y] < treeHeight){
-                colorMap[x, y] = new Color(0.3f, 1.0f, 0.3f);
-            }else{
-                colorMap[x, y] = new Color(0.3f, 0.3f, 0.3f);
+            if(Random.Range(0f,1f) < 0.03f){
+                Instantiate(tree01_prefab, new Vector3(x, terrain.SampleHeight(new Vector3(x, 0f, y)), y), new Quaternion());
             }
         }
-        //terrainData.terrainLayers[0].diffuseTexture = generateTexture2D(colorMap);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // turn world position into terrain coordinate
