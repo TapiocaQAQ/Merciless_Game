@@ -47,7 +47,7 @@ public class Terrain_generator : MonoBehaviour
    
     public void GenerateTrees(){
         for(int x=0; x<size; x++) for(int y=0; y<size; y++){
-            if(Random.Range(0f,1f) < 0.03f){
+            if(Random.Range(0f,1f) < 0.03f && Vector2.Distance(new Vector2(x, y), playerSpawnCoord)>10){
                 Instantiate(tree01_prefab, new Vector3(x, terrain.SampleHeight(new Vector3(x, 0f, y)), y), new Quaternion());
             }
         }

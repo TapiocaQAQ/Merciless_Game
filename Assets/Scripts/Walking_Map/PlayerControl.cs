@@ -13,8 +13,6 @@ public class PlayerControl : MonoBehaviour {
 	public float moveSpeed = 2f;
 
 	public Vector3 fallSpeed;
-	float gravity = -9.8f;
-
 	float distToGround;
 	bool isJumped = false;
 	bool inAir = false;
@@ -77,7 +75,7 @@ public class PlayerControl : MonoBehaviour {
 		playerController.Move(transform.right*moveH + transform.forward*moveV);
 
 		// control the falling
-		fallSpeed.y += gravity * Time.deltaTime;
+		fallSpeed.y += Config.gravity * Time.deltaTime;
 		playerController.Move(fallSpeed * Time.deltaTime);
 	}
 }
