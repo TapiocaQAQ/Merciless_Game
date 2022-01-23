@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TherianthropyManager : MonoBehaviour
+public class DwarfManager : MonoBehaviour
 {
     #region Singleton
 
-    public static TherianthropyManager instance;
+    public static DwarfManager instance;
 
     private void Awake() {
         if(instance == null){
             instance = this;
             DontDestroyOnLoad(this);
         }else{
-            TherianthropyManager.instance.Destroy();
+            DwarfManager.instance.Destroy();
             instance = this;
         }
     }
@@ -25,7 +25,7 @@ public class TherianthropyManager : MonoBehaviour
 
     #endregion
 
-    public GameObject therianthropy;
+    public GameObject dwarf;
     public Ethnicity ethnicity;
 
     // Start is called before the first frame update
@@ -44,11 +44,11 @@ public class TherianthropyManager : MonoBehaviour
 
     void GenerateCharactor(int quantity)
     {
-        EthnicityManager.instance.ethnicities[1].population += quantity;
+        EthnicityManager.instance.ethnicities[2].population += quantity;
 
         for (int i = 0; i < quantity; i++)
         {
-            Instantiate(therianthropy, new Vector3(2, 5, i * 10), Quaternion.identity, transform);
+            Instantiate(dwarf, new Vector3(4, 5, i * 10), Quaternion.identity, transform);
         }
     }
 }

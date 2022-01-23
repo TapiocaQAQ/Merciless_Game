@@ -18,10 +18,15 @@ public class EthnicityManager : MonoBehaviour
         }
     }
 
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
     #endregion
 
+    /// <Summary>0:Human, 1:</Summary>
     public Ethnicity[] ethnicities;
-    public GameObject[] allEthnicityManagers;
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +44,7 @@ public class EthnicityManager : MonoBehaviour
     {
         for (int i = 0; i < numOfEthnicities; i++)
         {
-            Instantiate(allEthnicityManagers[i]);
+            Instantiate(ethnicities[i].manager);
         }
-    }
-
-    public void Destroy()
-    {
-        Destroy(gameObject);
     }
 }

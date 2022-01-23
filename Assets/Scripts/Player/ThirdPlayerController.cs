@@ -23,11 +23,18 @@ public class ThirdPlayerController : MonoBehaviour
     public bool moveLimit;
     public bool jumpLimit;
     
-    void Start() {
+    void Start() 
+    {
         jump = jumpHeight;
     }
 
-    void Update() {
+    void Update() 
+    {
+        Movement();
+    }
+
+    void Movement()
+    {
         speed = norSpeed + buffSpeed - debuffSpeed;
 
         if(buffSpeed >= 0){

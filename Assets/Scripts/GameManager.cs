@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void StartWorld()
     {
+        //Initialize
         EthnicityManager.instance.GenerateEthnicity(numOfEthnicities);
     }
 

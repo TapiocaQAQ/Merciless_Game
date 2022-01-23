@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23b159d4b87ac5479ccad4ee597b045, type: 3}
   m_Name: Human
   m_EditorClassIdentifier: 
+  manager: {fileID: 2163191060694236414, guid: 895d44f0a183e584f85d4068c989fd14, type: 3}
   ethnicityName: Human
-  population: 0
+  population: 5
   health: 0
   endurance: 0
+  hunger: 0
   intelligence: 0
+  warlike: 0
+  greedy: 0
+  habit: 0
