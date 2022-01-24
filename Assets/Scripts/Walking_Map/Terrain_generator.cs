@@ -10,8 +10,6 @@ public class Terrain_generator : MonoBehaviour
     int size;
     Vector2 playerSpawnCoord;
 
-    public GameObject tree01_prefab;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +20,7 @@ public class Terrain_generator : MonoBehaviour
 
         GenerateTerrain();
         GenerateTrees();
+        GenerateRabbits();
     }
 
     // Generate new height map for the terrain 
@@ -33,11 +32,11 @@ public class Terrain_generator : MonoBehaviour
 
             // flat out the terrain near player spawn point
             float dist2spawn = Vector2.Distance(new Vector2(x, y), playerSpawnCoord);
-            if( dist2spawn<5){
+            if( dist2spawn<25){
                 heightsMap[x, y] = 0.05f;
-            }else if(dist2spawn<15){
+            }else if(dist2spawn<50){
                 heightsMap[x, y] -= 0.05f;
-                heightsMap[x, y] *= (dist2spawn-5)/10;
+                heightsMap[x, y] *= (dist2spawn-25)/25;
                 heightsMap[x, y] += 0.05f;
             }
         }
@@ -47,8 +46,15 @@ public class Terrain_generator : MonoBehaviour
    
     public void GenerateTrees(){
         for(int x=0; x<size; x++) for(int y=0; y<size; y++){
-            if(Random.Range(0f,1f) < 0.03f && Vector2.Distance(new Vector2(x, y), playerSpawnCoord)>10){
-                Instantiate(tree01_prefab, new Vector3(x, terrain.SampleHeight(new Vector3(x, 0f, y)), y), new Quaternion());
+            if(Random.Range(0f,1f) < 0.03f && Vector2.Distance(new Vector2(x, y), playerSpawnCoord)>25){
+                Instantiate(Config.tree01, new Vector3(x, terrain.SampleHeight(new Vector3(x, 0f, y)), y), new Quaternion());
+            }
+        }
+    }
+    public void GenerateRabbits(){
+        for(int x=0; x<size; x++) for(int y=0; y<size; y++){
+            if(Random.Range(0f,1f) < 0.005f && Vector2.Distance(new Vector2(x, y), playerSpawnCoord)<150){
+                Instantiate(Config.rabbit, new Vector3(x, terrain.SampleHeight(new Vector3(x, 0f, y)), y), new Quaternion());
             }
         }
     }
