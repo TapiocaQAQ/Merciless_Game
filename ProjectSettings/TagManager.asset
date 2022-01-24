@@ -11,13 +11,13 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
+  - CanInteractiveCharacter
+  - 
+  - 
+  - 
+  - 
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
   - 
   - 
   - 

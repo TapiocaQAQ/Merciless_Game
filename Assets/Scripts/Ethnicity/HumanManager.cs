@@ -28,12 +28,13 @@ public class HumanManager : MonoBehaviour
     public GameObject human;
     public Ethnicity ethnicity;
 
+    public int[] missionExcutingList;//check mission has how many character are excuting
+
     // Start is called before the first frame update
     void Start()
     {
+        Initialize();
         GenerateCharactor(5);
-        ethnicity = EthnicityManager.instance.ethnicities[0];
-        ethnicity.population = 5;
     }
 
     // Update is called once per frame
@@ -42,13 +43,33 @@ public class HumanManager : MonoBehaviour
         
     }
 
+    void Initialize()
+    {
+        ethnicity = EthnicityManager.instance.ethnicities[1];
+        ethnicity.population = 5;
+    }
+
     void GenerateCharactor(int quantity)
     {
-        EthnicityManager.instance.ethnicities[0].population += quantity;
+        EthnicityManager.instance.ethnicities[1].population += quantity;
 
         for (int i = 0; i < quantity; i++)
         {
             Instantiate(human, new Vector3(0, 5, i * 10), Quaternion.identity, transform);
         }
+    }
+
+    public byte GetCharacterActionIndex()
+    {
+        if(ethnicity.hunger <= 30 && missionExcutingList[1] < 3){
+            missionExcutingList[1]++;
+            return 1;
+        }
+
+        if(ethnicity.hunger <= 50 && missionExcutingList[1] < 1){
+            missionExcutingList[1]++;
+            return 1;
+        }
+        return 0;
     }
 }

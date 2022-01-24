@@ -10,6 +10,13 @@ public class Human : MonoBehaviour
     public float GFXcheckPlayerDst = 100;
     public LayerMask playerLayer;
 
+    [Header("Action")]
+    int actionIndex;
+    int[] actionsIndex;
+
+    [Header("Attributes")]
+    public string characterName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +28,19 @@ public class Human : MonoBehaviour
     {
         CheckShowGFX();
 
-        //Optimaztion when player is out of range
-        if(!isGFXActive){
-            return;
-        }
+        
     }
 
     void CheckShowGFX()
     {
         isGFXActive = Physics.CheckSphere(transform.position, GFXcheckPlayerDst, playerLayer);
         GFX.SetActive(isGFXActive);
+    }
+
+    public int[] GetActions()
+    {
+        //stop action
+
+        return actionsIndex;
     }
 }

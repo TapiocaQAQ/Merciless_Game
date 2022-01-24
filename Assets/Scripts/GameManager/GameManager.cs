@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    [Header("LocalPlayer")]
+    public Transform localPlayerCam;
+    public ThirdPlayerController localPlayerController;
+
     public int numOfEthnicities;
 
     // Start is called before the first frame update

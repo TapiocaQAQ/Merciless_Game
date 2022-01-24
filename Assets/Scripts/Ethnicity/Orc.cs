@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Therianthropy : MonoBehaviour
+public class Orc : MonoBehaviour
 {
     [Header("GFX Optimization")]
     bool isGFXActive;

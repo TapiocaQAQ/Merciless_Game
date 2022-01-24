@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TherianthropyManager : MonoBehaviour
+public class OrcManager : MonoBehaviour
 {
     #region Singleton
 
-    public static TherianthropyManager instance;
+    public static OrcManager instance;
 
     private void Awake() {
         if(instance == null){
             instance = this;
             DontDestroyOnLoad(this);
         }else{
-            TherianthropyManager.instance.Destroy();
+            OrcManager.instance.Destroy();
             instance = this;
         }
     }
@@ -25,14 +25,14 @@ public class TherianthropyManager : MonoBehaviour
 
     #endregion
 
-    public GameObject therianthropy;
+    public GameObject orc;
     public Ethnicity ethnicity;
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateCharactor(5);
-        ethnicity = EthnicityManager.instance.ethnicities[0];
+        ethnicity = EthnicityManager.instance.ethnicities[2];
         ethnicity.population = 5;
     }
 
@@ -44,11 +44,11 @@ public class TherianthropyManager : MonoBehaviour
 
     void GenerateCharactor(int quantity)
     {
-        EthnicityManager.instance.ethnicities[1].population += quantity;
+        EthnicityManager.instance.ethnicities[2].population += quantity;
 
         for (int i = 0; i < quantity; i++)
         {
-            Instantiate(therianthropy, new Vector3(2, 5, i * 10), Quaternion.identity, transform);
+            Instantiate(orc, new Vector3(4, 5, i * 10), Quaternion.identity, transform);
         }
     }
 }

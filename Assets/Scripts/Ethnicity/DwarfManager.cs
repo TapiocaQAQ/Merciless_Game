@@ -32,7 +32,7 @@ public class DwarfManager : MonoBehaviour
     void Start()
     {
         GenerateCharactor(5);
-        ethnicity = EthnicityManager.instance.ethnicities[0];
+        ethnicity = EthnicityManager.instance.ethnicities[3];
         ethnicity.population = 5;
     }
 
@@ -44,11 +44,11 @@ public class DwarfManager : MonoBehaviour
 
     void GenerateCharactor(int quantity)
     {
-        EthnicityManager.instance.ethnicities[2].population += quantity;
+        EthnicityManager.instance.ethnicities[3].population += quantity;
 
         for (int i = 0; i < quantity; i++)
         {
-            Instantiate(dwarf, new Vector3(4, 5, i * 10), Quaternion.identity, transform);
+            Instantiate(dwarf, new Vector3(8, 5, i * 10), Quaternion.identity, transform);
         }
     }
 }

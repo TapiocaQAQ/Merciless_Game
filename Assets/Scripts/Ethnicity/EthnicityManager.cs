@@ -25,7 +25,7 @@ public class EthnicityManager : MonoBehaviour
 
     #endregion
 
-    /// <Summary>0:Human, 1:</Summary>
+    /// <Summary>0:player, 1:Human, 2:</Summary>
     public Ethnicity[] ethnicities;
 
     // Start is called before the first frame update
@@ -42,9 +42,14 @@ public class EthnicityManager : MonoBehaviour
 
     public void GenerateEthnicity(float numOfEthnicities)
     {
-        for (int i = 0; i < numOfEthnicities; i++)
+        for (int i = 1; i <= numOfEthnicities; i++)
         {
             Instantiate(ethnicities[i].manager);
         }
+    }
+
+    public string GetEthnicityName(int index)
+    {
+        return ethnicities[index].ethnicityName;
     }
 }

@@ -16,4 +16,5 @@ public class Ethnicity : ScriptableObject
     public float warlike;
     public float greedy;
     public float habit;
+    public float wealth;
 }

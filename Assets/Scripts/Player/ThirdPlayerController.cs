@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThirdPlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     public CharacterController characterController;
     public Transform cam;
     private float turnSmoothTime = .1f;
@@ -22,6 +23,14 @@ public class ThirdPlayerController : MonoBehaviour
     Vector3 velocity;
     public bool moveLimit;
     public bool jumpLimit;
+
+    [Header("Intaeration")]
+    public Transform interactionCam;
+    public Transform interactionCamHolder;
+    public float interactionDst = 2f;
+    public LayerMask interactiveLayer;
+    GameObject currentInteractionTarget;
+    [HideInInspector]public bool isInteracting;
     
     void Start() 
     {
@@ -31,6 +40,7 @@ public class ThirdPlayerController : MonoBehaviour
     void Update() 
     {
         Movement();
+        CharacterInteraction();
     }
 
     void Movement()
@@ -80,5 +90,44 @@ public class ThirdPlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+    }
+
+    void CharacterInteraction()
+    {
+        if(isInteracting){
+            return;
+        }
+
+        //set interactionRay dir
+        Vector3 interRayDir = transform.position - cam.position;
+        float yRotation = cam.transform.eulerAngles.y;
+        interactionCamHolder.rotation = Quaternion.Euler(0, yRotation, 0);
+        interactionCam.rotation = Quaternion.Euler(0, yRotation, 0);
+
+        //use raycast to detact target
+        RaycastHit hit;
+        if(Physics.Raycast(interactionCam.position, interactionCam.forward, out hit, interactionDst, interactiveLayer)){
+            if(hit.transform.gameObject != currentInteractionTarget){
+                if(currentInteractionTarget != null){
+                    currentInteractionTarget.GetComponentInParent<Interaction>().DisplayInteractionUI(false);
+                }
+                currentInteractionTarget = hit.transform.gameObject;
+                currentInteractionTarget.GetComponentInParent<Interaction>().DisplayInteractionUI(true);
+            }
+        }else{
+            if(currentInteractionTarget != null){
+                currentInteractionTarget.GetComponentInParent<Interaction>().DisplayInteractionUI(false);
+                currentInteractionTarget = null;
+            }
+        }
+
+        if(currentInteractionTarget == null || isInteracting){
+            return;
+        }
+
+        if(Input.GetButtonDown("Interaction")){
+            currentInteractionTarget.GetComponentInParent<Interaction>().InteractionFunc();
+            isInteracting = true;
+        }
     }
 }
