@@ -16,5 +16,14 @@ public class Ethnicity : ScriptableObject
     public float warlike;
     public float greedy;
     public float habit;
-    public float wealth;
+    public float[] Favorability;
+
+    //Resources
+    public int countOfWood;
+    public int countOfStone;
+    public int countOfIron;
+    public int countOfCoal;
+    public int countOfLeather;
+    public int countOfFood;
+    public int wealth;
 }

@@ -1,30 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Orc : MonoBehaviour
 {
+    public TextMeshProUGUI nameText;
+
     [Header("GFX Optimization")]
-    bool isGFXActive;
     public GameObject GFX;
-    public float checkPlayerDst = 100;
+    public GameObject nameTextUI;
+    public float GFXcheckPlayerDst = 100;
+    public float nameUICheckDst = 40;
     public LayerMask playerLayer;
 
-    // Start is called before the first frame update
-    void Start()
+    [Header("Action")]
+    int currentActionIndex;
+    public int[] missionsIndex;
+
+    [Header("Attributes")]
+    public string characterName;
+    public string ethnicityColor;
+    public string characterOccupation;
+    public string occupationColor;
+    float health;
+    float endurance;
+
+    public void Initialize(string _characterName)
     {
-        
+        characterName = _characterName;
+        nameText.text = $"<color=#{ethnicityColor}>{characterName}</color>\n <color=#505050>無職業</color>";
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckShowGFX();
+        nameTextUI.transform.LookAt(transform.position + GameManager.instance.localPlayerCam.forward);
     }
 
     void CheckShowGFX()
     {
-        isGFXActive = Physics.CheckSphere(transform.position, checkPlayerDst, playerLayer);
+        bool isGFXActive = Physics.CheckSphere(transform.position, GFXcheckPlayerDst, playerLayer);
         GFX.SetActive(isGFXActive);
+        bool isNameUIActive = Physics.CheckSphere(transform.position, nameUICheckDst, playerLayer);
+        nameTextUI.SetActive(isNameUIActive);
+    }
+
+    public void SetOccupation(string _characterOccupation, string _occupationColor)
+    {
+        characterOccupation = _characterOccupation;
+        occupationColor = _occupationColor;
+        nameText.text = $"<color=#{ethnicityColor}>{characterName}</color>\n <color=#{_occupationColor}>{characterOccupation}</color>";
+    }
+
+    public int[] GetMissions()
+    {
+        //stop action
+
+        return missionsIndex;
     }
 }

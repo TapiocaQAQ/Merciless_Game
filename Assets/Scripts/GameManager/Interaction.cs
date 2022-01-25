@@ -10,7 +10,7 @@ public class Interaction : MonoBehaviour
 
     bool interacting;
     
-    int[] actions;
+    int[] missions;
 
     // Update is called once per frame
     void Update()
@@ -34,13 +34,25 @@ public class Interaction : MonoBehaviour
         }
 
         interacting = true;
+        interactionUI.SetActive(false);
 
         if(characterIndex == 0){
 
         }else if(characterIndex == 1){
-            actions = GetComponent<Human>().GetActions();
+            missions = GetComponent<Human>().GetMissions();
+            UIManager.instance.DisplayInteractionPanel(this, gameObject, characterIndex, missions);
+        }else if(characterIndex == 2){
+            missions = GetComponent<Orc>().GetMissions();
+            UIManager.instance.DisplayInteractionPanel(this, gameObject, characterIndex, missions);
+        }else if(characterIndex == 3){
+            missions = GetComponent<Dwarf>().GetMissions();
+            UIManager.instance.DisplayInteractionPanel(this, gameObject, characterIndex, missions);
         }
+    }
 
-        UIManager.instance.DisplayInteractionPanel(this, GetComponent<Human>().characterName, characterIndex, actions);
+    public void CancelInteraction()
+    {
+        interactionUI.SetActive(true);
+        interacting = false;
     }
 }

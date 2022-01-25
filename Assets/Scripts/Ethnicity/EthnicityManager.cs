@@ -27,14 +27,15 @@ public class EthnicityManager : MonoBehaviour
 
     /// <Summary>0:player, 1:Human, 2:</Summary>
     public Ethnicity[] ethnicities;
+    public GameObject[] allEthnicitiesManagers;
+    int countOfAllEthnicities;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        countOfAllEthnicities = ethnicities.Length;
+        allEthnicitiesManagers = new GameObject[countOfAllEthnicities];
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -44,12 +45,24 @@ public class EthnicityManager : MonoBehaviour
     {
         for (int i = 1; i <= numOfEthnicities; i++)
         {
-            Instantiate(ethnicities[i].manager);
+            GameObject g = Instantiate(ethnicities[i].manager);
+            allEthnicitiesManagers[i] = g;
         }
     }
-
-    public string GetEthnicityName(int index)
+    
+    public string GetMissionBtnName(int characterIndex, int missionindex)
     {
-        return ethnicities[index].ethnicityName;
+        if(characterIndex == 0){
+            
+        }else if(characterIndex == 1){
+            return allEthnicitiesManagers[1].GetComponent<HumanManager>().GetMissionBtnName(missionindex);
+        }else if(characterIndex == 2){
+            return allEthnicitiesManagers[2].GetComponent<OrcManager>().GetMissionBtnName(missionindex);
+        }else if(characterIndex == 3){
+            return allEthnicitiesManagers[3].GetComponent<DwarfManager>().GetMissionBtnName(missionindex);
+        }
+
+        Debug.Log("There have some problem");
+        return null;
     }
 }

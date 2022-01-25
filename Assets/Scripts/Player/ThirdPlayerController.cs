@@ -130,4 +130,10 @@ public class ThirdPlayerController : MonoBehaviour
             isInteracting = true;
         }
     }
+
+    public void CancelInteraction()
+    {
+        currentInteractionTarget.GetComponentInParent<Interaction>().CancelInteraction();
+        isInteracting = false;
+    }
 }
