@@ -41,6 +41,7 @@ public static class Noise
 
                    amplitude *= persistance;
                    frequency *= lacunarity;
+                   
                }
                if(noiseHeight > maxNoiseHeight){
                    maxNoiseHeight = noiseHeight;
