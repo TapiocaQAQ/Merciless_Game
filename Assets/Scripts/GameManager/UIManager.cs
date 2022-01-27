@@ -34,16 +34,35 @@ public class UIManager : MonoBehaviour
     public GameObject[] btns;
     public Text[] btnsText;
 
+    [Header("Equipment")]
+    public GameObject playerAllObjectPanel;
+    public GameObject[] eqipementsImage;
+    public int[] countOfEquipement;
+    public Text[] equipementCountText;
+    public GameObject[] equipementDescriptionPanel;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        countOfEquipement = new int[eqipementsImage.Length];
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Tab)){
+            playerAllObjectPanel.SetActive(true);
+            Cursor.visible = true;
+        }
+        if(Input.GetKeyUp(KeyCode.Tab)){
+            playerAllObjectPanel.SetActive(false);
+            Cursor.visible = false;
+
+            for (int i = 0; i < equipementDescriptionPanel.Length; i++)
+            {
+                equipementDescriptionPanel[i].SetActive(false);
+            }
+        }
     }
 
     public void DisplayInteractionPanel(Interaction interaction, GameObject characterObject, int characterIndex, int[] missions)
@@ -90,13 +109,24 @@ public class UIManager : MonoBehaviour
         currentInteractionManager = null;
     }
 
-    public string GetOccupationColor(string characterOccupation)
+    public void GetEquipement(int equipementIndex, int count)
     {
-        if(characterOccupation == "木工"){
-            return "#ff0000ff";
-        }else{
-            Debug.Log($"occupation {characterOccupation} had been forgiven");
-            return null;
+        countOfEquipement[equipementIndex] += count;
+        equipementCountText[equipementIndex].text = $"x{countOfEquipement[equipementIndex]}";
+        eqipementsImage[equipementIndex].SetActive(true);
+    }
+
+    public void UseEquipement(int equipementIndex, int count)
+    {
+        countOfEquipement[equipementIndex] -= count;
+        equipementCountText[equipementIndex].text = $"x{countOfEquipement[equipementIndex]}";
+        if(countOfEquipement[equipementIndex] <= 0){
+            eqipementsImage[equipementIndex].SetActive(false);
         }
+    }
+
+    public void DisplayEquipementDescriptionPanel(int index, bool isShow)
+    {
+        equipementDescriptionPanel[index].SetActive(isShow);
     }
 }

@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class ThirdPlayerController : MonoBehaviour
 {
+    [Header("Attribute")]
+    public string username;
+    public float health;
+    public float endurance;
+    public float attackDamage;
+    public float hunger;
+    public int[] numOfResources;
+    public float speed;
+
     [Header("Movement")]
     public CharacterController characterController;
     public Transform cam;
     private float turnSmoothTime = .1f;
     private float turnSmoothVelocity;
-    public float speed;
     public float buffSpeed;//norAttack
     public float debuffSpeed;
     public float norSpeed = 50f;
