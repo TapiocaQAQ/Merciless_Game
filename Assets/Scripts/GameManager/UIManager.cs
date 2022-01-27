@@ -34,17 +34,17 @@ public class UIManager : MonoBehaviour
     public GameObject[] btns;
     public Text[] btnsText;
 
-    [Header("Equipment")]
+    [Header("Resource")]
     public GameObject playerAllObjectPanel;
-    public GameObject[] eqipementsImage;
-    public int[] countOfEquipement;
-    public Text[] equipementCountText;
-    public GameObject[] equipementDescriptionPanel;
+    public GameObject[] resourcesImage;
+    public int[] countOfResources;
+    public Text[] resourcesCountText;
+    public GameObject[] resourcesDescriptionPanel;
 
     // Start is called before the first frame update
     void Start()
     {
-        countOfEquipement = new int[eqipementsImage.Length];
+        countOfResources = new int[resourcesImage.Length];
     }
 
     // Update is called once per frame
@@ -58,9 +58,9 @@ public class UIManager : MonoBehaviour
             playerAllObjectPanel.SetActive(false);
             Cursor.visible = false;
 
-            for (int i = 0; i < equipementDescriptionPanel.Length; i++)
+            for (int i = 0; i < resourcesDescriptionPanel.Length; i++)
             {
-                equipementDescriptionPanel[i].SetActive(false);
+                resourcesDescriptionPanel[i].SetActive(false);
             }
         }
     }
@@ -111,22 +111,22 @@ public class UIManager : MonoBehaviour
 
     public void GetEquipement(int equipementIndex, int count)
     {
-        countOfEquipement[equipementIndex] += count;
-        equipementCountText[equipementIndex].text = $"x{countOfEquipement[equipementIndex]}";
-        eqipementsImage[equipementIndex].SetActive(true);
+        countOfResources[equipementIndex] += count;
+        resourcesCountText[equipementIndex].text = $"x{countOfResources[equipementIndex]}";
+        resourcesImage[equipementIndex].SetActive(true);
     }
 
     public void UseEquipement(int equipementIndex, int count)
     {
-        countOfEquipement[equipementIndex] -= count;
-        equipementCountText[equipementIndex].text = $"x{countOfEquipement[equipementIndex]}";
-        if(countOfEquipement[equipementIndex] <= 0){
-            eqipementsImage[equipementIndex].SetActive(false);
+        countOfResources[equipementIndex] -= count;
+        resourcesCountText[equipementIndex].text = $"x{countOfResources[equipementIndex]}";
+        if(countOfResources[equipementIndex] <= 0){
+            resourcesImage[equipementIndex].SetActive(false);
         }
     }
 
     public void DisplayEquipementDescriptionPanel(int index, bool isShow)
     {
-        equipementDescriptionPanel[index].SetActive(isShow);
+        resourcesDescriptionPanel[index].SetActive(isShow);
     }
 }

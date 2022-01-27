@@ -25,9 +25,11 @@ public class Human : MonoBehaviour
     public string occupationColor;
     float health;
     float endurance;
+    public int[] resources;
 
     public void Initialize(string _characterName)
     {
+        resources = new int[ResourceManager.instance.GetResourcesLength];
         characterName = _characterName;
         nameText.text = $"<color=#{ethnicityColor}>{characterName}</color>\n <color=#505050>無職業</color>";
     }
@@ -36,6 +38,10 @@ public class Human : MonoBehaviour
     {
         CheckShowGFX();
         nameTextUI.transform.LookAt(transform.position + GameManager.instance.localPlayerCam.forward);
+
+        if(Input.GetKeyDown(KeyCode.K)){
+            TakeDamage(20);
+        }
     }
 
     void CheckShowGFX()
@@ -58,5 +64,14 @@ public class Human : MonoBehaviour
         //stop action
 
         return missionsIndex;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if(health <= 0){
+            ResourceManager.instance.InstantiateResources(transform.position, resources);
+            Destroy(gameObject);
+        }
     }
 }

@@ -10,7 +10,6 @@ public class ThirdPlayerController : MonoBehaviour
     public float endurance;
     public float attackDamage;
     public float hunger;
-    public int[] numOfResources;
     public float speed;
 
     [Header("Movement")]
@@ -71,7 +70,7 @@ public class ThirdPlayerController : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if(!moveLimit){
+        if(!moveLimit && !isInteracting){
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
 
@@ -86,10 +85,9 @@ public class ThirdPlayerController : MonoBehaviour
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 characterController.Move(moveDir.normalized * speed * Time.deltaTime);
             }
-
         }
         
-        if(!jumpLimit){
+        if(!jumpLimit && !isInteracting){
             if(Input.GetButtonDown("Jump") && isGrounded){
                 velocity.y = Mathf.Sqrt(jump * -2f * gravity);
                 isGrounded = false;
@@ -136,6 +134,7 @@ public class ThirdPlayerController : MonoBehaviour
         if(Input.GetButtonDown("Interaction")){
             currentInteractionTarget.GetComponentInParent<Interaction>().InteractionFunc();
             isInteracting = true;
+            Cursor.visible = true;
         }
     }
 
@@ -143,5 +142,6 @@ public class ThirdPlayerController : MonoBehaviour
     {
         currentInteractionTarget.GetComponentInParent<Interaction>().CancelInteraction();
         isInteracting = false;
+        Cursor.visible = true;
     }
 }
