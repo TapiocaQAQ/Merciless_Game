@@ -21,10 +21,13 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [Header("LocalPlayer")]
+    public int myPlayerId;
     public Transform localPlayerCam;
     public ThirdPlayerController localPlayerController;
 
     public int numOfEthnicities;
+
+    public GameObject settingPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,10 @@ public class GameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.G)){
             StartWorld();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            settingPanel.SetActive(!settingPanel.activeSelf);
         }
     }
 

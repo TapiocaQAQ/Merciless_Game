@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ThirdPlayerController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class ThirdPlayerController : MonoBehaviour
     public float speed;
 
     [Header("Movement")]
+    public List<CinemachineFreeLook> cinema;
     public CharacterController characterController;
     public Transform cam;
     private float turnSmoothTime = .1f;
