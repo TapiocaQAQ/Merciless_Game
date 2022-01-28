@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orc: {fileID: 4955391912200093982, guid: 93c6a73ad7103354895e7b573fa24d7c, type: 3}
-  ethnicity: {fileID: 11400000, guid: 1f211c87835c4e94b8dcfe5387e0f678, type: 2}
+  territory: {fileID: 3613149951757195149, guid: 711942aae37985d42a85436c27b7205e, type: 3}
+  actionExcutingList: 

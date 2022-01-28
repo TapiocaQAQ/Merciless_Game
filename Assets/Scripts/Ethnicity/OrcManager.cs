@@ -26,11 +26,13 @@ public class OrcManager : MonoBehaviour
     #endregion
 
     public GameObject orc;
-    public Ethnicity ethnicity;
+    Ethnicity ethnicity;
+    public GameObject territory;
 
     public int[] actionExcutingList;//check action has how many character are excuting
 
-    int[] occupationsPopulation;//store how many people in this occupations 
+    int[] occupationsPopulation;//store how many people in this occupations
+    int[] remainOccupationsPopulation;//store how many people can apply for this occupations
 
     string[] characterName = {
         "Job",
@@ -42,6 +44,7 @@ public class OrcManager : MonoBehaviour
     {
         Initialize();
         GenerateCharactor(5);
+        GenerateTerritory(new Vector3(0,0,0), 30);
     }
 
     void Initialize()
@@ -66,6 +69,12 @@ public class OrcManager : MonoBehaviour
         }
     }
 
+    void GenerateTerritory(Vector3 pos, float radius)
+    {
+        GameObject g = Instantiate(territory, pos, Quaternion.identity, transform);
+        g.transform.localScale = Vector3.one * radius;
+    }
+
     #region Mission
 
     public string GetMissionBtnName(int missionindex)
@@ -84,7 +93,7 @@ public class OrcManager : MonoBehaviour
         return null;
     }
 
-    public void ExecuterMission(int missionindex)
+    public void ExecuteMission(int missionindex)
     {
         //check player whether arrive mission requirement
         if(missionindex == 0){
@@ -118,6 +127,18 @@ public class OrcManager : MonoBehaviour
     }
 
     #endregion
+
+    public int GetOccupation()
+    {
+        for (int i = 1; i < remainOccupationsPopulation.Length; i++)
+        {
+            if(remainOccupationsPopulation[i] > 0){
+                remainOccupationsPopulation[i]--;
+                return i;
+            }
+        }
+        return 0;
+    }
 
     public string SetCharacterName
     {

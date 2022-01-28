@@ -14,18 +14,21 @@ public class Human : MonoBehaviour
     public float nameUICheckDst = 40;
     public LayerMask playerLayer;
 
-    [Header("Action")]
-    int currentActionIndex;
-    public int[] missionsIndex;
-
     [Header("Attributes")]
     public string characterName;
     public string ethnicityColor;
     public string characterOccupation;
     public string occupationColor;
     float health;
-    float endurance;
+    float currentEndurance;
+    float enduranceConsume = 0.1f;
+    float maxEndurance = 600f;
     public int[] resources;
+
+    int currentActionIndex;
+    public int[] missionsIndex;
+    bool inOwnerTerritory;
+    int occupationIndex;
 
     public void Initialize(string _characterName)
     {
@@ -38,6 +41,7 @@ public class Human : MonoBehaviour
     {
         CheckShowGFX();
         nameTextUI.transform.LookAt(transform.position + GameManager.instance.localPlayerCam.forward);
+        Activity();
 
         if(Input.GetKeyDown(KeyCode.K)){
             TakeDamage(20);
@@ -50,6 +54,37 @@ public class Human : MonoBehaviour
         GFX.SetActive(isGFXActive);
         bool isNameUIActive = Physics.CheckSphere(transform.position, nameUICheckDst, playerLayer);
         nameTextUI.SetActive(isNameUIActive);
+    }
+
+    void Activity()
+    {
+        if(!inOwnerTerritory){
+            if(currentEndurance <= 0){
+                //back to territory
+
+            }else if(currentEndurance >= maxEndurance){
+                //execute action
+
+            }else{
+                currentEndurance -= enduranceConsume * Time.deltaTime;
+            }
+        }else{
+            currentEndurance += enduranceConsume * Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.CompareTag("HumanTerritory")){
+            inOwnerTerritory = true;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.CompareTag("HumanTerritory")){
+            inOwnerTerritory = false;
+        }
     }
 
     public void SetOccupation(string _characterOccupation, string _occupationColor)

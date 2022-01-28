@@ -14,20 +14,25 @@ public class Dwarf : MonoBehaviour
     public float nameUICheckDst = 40;
     public LayerMask playerLayer;
 
-    [Header("Action")]
-    int currentActionIndex;
-    public int[] missionsIndex;
-
     [Header("Attributes")]
     public string characterName;
     public string ethnicityColor;
     public string characterOccupation;
     public string occupationColor;
     float health;
-    float endurance;
+    float currentEndurance;
+    float enduranceConsume = 0.1f;
+    float maxEndurance = 600f;
+    public int[] resources;
+
+    int currentActionIndex;
+    public int[] missionsIndex;
+    bool inOwnerTerritory;
+    int occupationIndex;
 
     public void Initialize(string _characterName)
     {
+        resources = new int[ResourceManager.instance.GetResourcesLength];
         characterName = _characterName;
         nameText.text = $"<color=#{ethnicityColor}>{characterName}</color>\n <color=#505050>無職業</color>";
     }
@@ -36,6 +41,7 @@ public class Dwarf : MonoBehaviour
     {
         CheckShowGFX();
         nameTextUI.transform.LookAt(transform.position + GameManager.instance.localPlayerCam.forward);
+        Activity();
     }
 
     void CheckShowGFX()
@@ -44,6 +50,37 @@ public class Dwarf : MonoBehaviour
         GFX.SetActive(isGFXActive);
         bool isNameUIActive = Physics.CheckSphere(transform.position, nameUICheckDst, playerLayer);
         nameTextUI.SetActive(isNameUIActive);
+    }
+
+    void Activity()
+    {
+        if(!inOwnerTerritory){
+            if(currentEndurance <= 0){
+                //back to territory
+
+            }else if(currentEndurance >= maxEndurance){
+                //execute action
+                
+            }else{
+                currentEndurance -= enduranceConsume * Time.deltaTime;
+            }
+        }else{
+            currentEndurance += enduranceConsume * Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.CompareTag("DwarfTerritory")){
+            inOwnerTerritory = true;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.CompareTag("DwarfTerritory")){
+            inOwnerTerritory = false;
+        }
     }
 
     public void SetOccupation(string _characterOccupation, string _occupationColor)
@@ -58,5 +95,14 @@ public class Dwarf : MonoBehaviour
         //stop action
 
         return missionsIndex;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if(health <= 0){
+            ResourceManager.instance.InstantiateResources(transform.position, resources);
+            Destroy(gameObject);
+        }
     }
 }

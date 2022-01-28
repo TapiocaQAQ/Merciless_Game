@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 
     void Start() 
     {
-        Play("BGM");
+        
     }
 
     public void Play(string _name)
@@ -65,11 +65,5 @@ public class AudioManager : MonoBehaviour
     public void Stop(int _index)
     {
         sounds[_index].source.Stop();
-    }
-
-    public void Reset()
-    {
-        AudioManager.instance.Stop(10);
-        AudioManager.instance.Play(7);
     }
 }

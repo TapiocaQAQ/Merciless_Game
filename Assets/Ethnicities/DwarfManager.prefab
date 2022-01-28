@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dwarf: {fileID: 1134350649917896658, guid: 869ec1f8de469244bb32dcdb15799d7a, type: 3}
+  territory: {fileID: 7083860484255008119, guid: 5adb9a4df7e1f244bbbbadf3e0889ea4, type: 3}
+  actionExcutingList: 
