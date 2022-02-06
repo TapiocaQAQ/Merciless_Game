@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapGenerator_kai : MonoBehaviour
 {
+    public Noise.NormalizeMode normalizeMode;
     const int mapSize = 10;
     const int mapChunkSize = 64;
     [Range(0,6)]
@@ -41,8 +42,8 @@ public class MapGenerator_kai : MonoBehaviour
         meshList = new MeshData[mapSize, mapSize];
         textureList = new Texture2D[mapSize, mapSize];
         int colourMapWidth = (mapChunkSize)*textureDetail;
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapSize*mapChunkSize+1, mapSize*mapChunkSize+1, seed, noiseScale, octaves, persistance, lacunarity, offset);
-        float[,] colourNoiseMap = Noise.GenerateNoiseMap(mapSize*colourMapWidth, mapSize*colourMapWidth, seed, noiseScale * textureDetail, octaves, persistance, lacunarity, offset);
+        float[,] noiseMap = Noise.GenerateNoiseMap(mapSize*mapChunkSize+1, mapSize*mapChunkSize+1, seed, noiseScale, octaves, persistance, lacunarity, offset, normalizeMode);
+        float[,] colourNoiseMap = Noise.GenerateNoiseMap(mapSize*colourMapWidth, mapSize*colourMapWidth, seed, noiseScale * textureDetail, octaves, persistance, lacunarity, offset, normalizeMode);
         GameObject map = new GameObject("map");
 
         for(int y = 0; y<mapSize ; y++) for(int x = 0 ; x<mapSize ; x++){
