@@ -2,12 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class LightingManager : MonoBehaviour
 {
+    #region Singleton
+
+    public static LightingManager instance;
+
+    private void Awake() {
+        if(instance == null){
+            instance = this;
+            DontDestroyOnLoad(this);
+        }else{
+            LightingManager.instance.Destroy();
+            instance = this;
+        }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
+
     [SerializeField]private Light directionalLight;
     [SerializeField]private LightingPreset preset;
-    [SerializeField, Range(0, 24)]private float timeOfDay = 12f;
+    [SerializeField, Range(0, 24)]private float timeOfDay = 12f;//17:time to break, //5.5:time to work
+    public bool isWorkingTime;
 
     void Update() 
     {
@@ -15,11 +36,14 @@ public class LightingManager : MonoBehaviour
             return;
         }
 
-        if(Application.isPlaying)
-        {
-            timeOfDay += Time.deltaTime * preset.sunSpeed;
-            timeOfDay %= 24;
-            UpdateLighting(timeOfDay / 24);
+        timeOfDay += Time.deltaTime * preset.sunSpeed;
+        timeOfDay %= 24;
+        UpdateLighting(timeOfDay / 24);
+
+        if(timeOfDay > 5.5 && timeOfDay < 17){
+            isWorkingTime = true;
+        }else{
+            isWorkingTime = false;
         }
     }
 

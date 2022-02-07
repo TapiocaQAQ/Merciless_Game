@@ -5,6 +5,7 @@ using TMPro;
 
 public class Human : MonoBehaviour
 {
+    public Rigidbody rigidbody;
     public TextMeshProUGUI nameText;
 
     [Header("GFX Optimization")]
@@ -19,16 +20,24 @@ public class Human : MonoBehaviour
     public string ethnicityColor;
     public string characterOccupation;
     public string occupationColor;
-    float health;
+    float maxHealth;
+    float currentHealth = 100;
     float currentEndurance;
     float enduranceConsume = 0.1f;
     float maxEndurance = 600f;
     public int[] resources;
+    public float speed = 1f;
 
     int currentActionIndex;
     public int[] missionsIndex;
     bool inOwnerTerritory;
     int occupationIndex;
+
+    //battle
+    bool inBattleStatus;
+    public GameObject battleTarget;
+    float battleCalmDownTime = 0f;
+    float battleDst = 3;
 
     public void Initialize(string _characterName)
     {
@@ -44,7 +53,7 @@ public class Human : MonoBehaviour
         Activity();
 
         if(Input.GetKeyDown(KeyCode.K)){
-            TakeDamage(20);
+            TakeDamage(null, 50);
         }
     }
 
@@ -58,18 +67,52 @@ public class Human : MonoBehaviour
 
     void Activity()
     {
+        //Battle
+        if(inBattleStatus){
+            //attack player
+            if(battleTarget != null){
+                Vector3 dir = battleTarget.transform.position - transform.position;
+                
+                if(Vector3.Magnitude(dir) >= battleDst){
+                    rigidbody.MovePosition(transform.position + dir * speed * Time.deltaTime);
+                }
+            }
+            
+            //CD
+            if(battleCalmDownTime <= 0){
+                inBattleStatus = false;
+                battleTarget = null;
+            }else{
+                battleCalmDownTime -= Time.deltaTime;
+            }
+            return;
+        }
+        currentHealth += Time.deltaTime;
+        Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        //Territory
         if(!inOwnerTerritory){
-            if(currentEndurance <= 0){
-                //back to territory
+            if(currentEndurance <= 0 || !LightingManager.instance.isWorkingTime){
+                //back to territory when endurance not enough or is at night
 
             }else if(currentEndurance >= maxEndurance){
                 //execute action
-
+                Action();
             }else{
                 currentEndurance -= enduranceConsume * Time.deltaTime;
             }
         }else{
             currentEndurance += enduranceConsume * Time.deltaTime;
+        }
+    }
+
+    void Action()
+    {
+        if(currentActionIndex == 0){
+
+        }else if(currentActionIndex == 1){
+            //find food
+
         }
     }
 
@@ -101,12 +144,16 @@ public class Human : MonoBehaviour
         return missionsIndex;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(GameObject target, int damage)
     {
-        health -= damage;
-        if(health <= 0){
+        currentHealth -= damage;
+        if(currentHealth <= 0){
             ResourceManager.instance.InstantiateResources(transform.position, resources);
             Destroy(gameObject);
+        }else{
+            battleCalmDownTime = 10f;
+            battleTarget = target;
+            inBattleStatus = true;
         }
     }
 }

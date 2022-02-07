@@ -43,8 +43,8 @@ public class HumanManager : MonoBehaviour
     void Start()
     {
         Initialize();
-        GenerateCharactor(5);
         GenerateTerritory(new Vector3(0,0,0), 30);
+        GenerateCharactor(5);
     }
 
     void Initialize()
