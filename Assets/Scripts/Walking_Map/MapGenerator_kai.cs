@@ -42,15 +42,15 @@ public class MapGenerator_kai : MonoBehaviour
         meshList = new MeshData[mapSize, mapSize];
         textureList = new Texture2D[mapSize, mapSize];
         int colourMapWidth = (mapChunkSize)*textureDetail;
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapSize*mapChunkSize+1, mapSize*mapChunkSize+1, seed, noiseScale, octaves, persistance, lacunarity, offset, normalizeMode);
         float[,] colourNoiseMap = Noise.GenerateNoiseMap(mapSize*colourMapWidth, mapSize*colourMapWidth, seed, noiseScale * textureDetail, octaves, persistance, lacunarity, offset, normalizeMode);
         GameObject map = new GameObject("map");
 
         for(int y = 0; y<mapSize ; y++) for(int x = 0 ; x<mapSize ; x++){
+            Vector2 localOffset = offset + new Vector2(x, y) / noiseScale * mapChunkSize;
 
             // generate all mesh chunks
             meshList[x, y] = MeshGenerator.GenerateTerrainMesh(
-                clipNoiseMap(noiseMap, x*mapChunkSize, y*mapChunkSize, mapChunkSize+1),
+                Noise.GenerateNoiseMap(mapChunkSize+1, mapChunkSize+1, seed, noiseScale, octaves, persistance, lacunarity, localOffset, normalizeMode),
                 meshHeightMultiplier, meshHeightCurve, meshSimplify
             );
 
@@ -68,7 +68,7 @@ public class MapGenerator_kai : MonoBehaviour
             textureList[x, y] = TextureGenerator.TextureFromColourMap(colorMap, colourMapWidth, colourMapWidth);
 
             // Create all map chunks
-            GameObject mapChunk = new GameObject("mapChunk[ "+x+" , "+(mapSize-y)+" ]");
+            GameObject mapChunk = new GameObject("mapChunk[ "+localOffset.x+" , "+localOffset.y+" ]");
             mapChunk.transform.SetParent(map.transform);
             mapChunk.transform.position = new Vector3(x*mapChunkSize, 0, (mapSize-y)*mapChunkSize);
             MeshFilter meshFilter = mapChunk.AddComponent<MeshFilter>();
