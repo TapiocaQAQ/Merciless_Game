@@ -38,6 +38,7 @@
 
 //     }
         
+<<<<<<< HEAD
 //     public void GenerateMap(){
 //         meshList = new MeshData[mapSize, mapSize];
 //         textureList = new Texture2D[mapSize, mapSize];
@@ -53,6 +54,23 @@
 //                 clipNoiseMap(noiseMap, x*mapChunkSize, y*mapChunkSize, mapChunkSize+1),
 //                 meshHeightMultiplier, meshHeightCurve, meshSimplify
 //             );
+=======
+    public void GenerateMap(){
+        meshList = new MeshData[mapSize, mapSize];
+        textureList = new Texture2D[mapSize, mapSize];
+        int colourMapWidth = (mapChunkSize)*textureDetail;
+        float[,] colourNoiseMap = Noise.GenerateNoiseMap(mapSize*colourMapWidth, mapSize*colourMapWidth, seed, noiseScale * textureDetail, octaves, persistance, lacunarity, offset, normalizeMode);
+        GameObject map = new GameObject("map");
+
+        for(int y = 0; y<mapSize ; y++) for(int x = 0 ; x<mapSize ; x++){
+            Vector2 localOffset = offset + new Vector2(x, y) / noiseScale * mapChunkSize;
+
+            // generate all mesh chunks
+            meshList[x, y] = MeshGenerator.GenerateTerrainMesh(
+                Noise.GenerateNoiseMap(mapChunkSize+1, mapChunkSize+1, seed, noiseScale, octaves, persistance, lacunarity, localOffset, normalizeMode),
+                meshHeightMultiplier, meshHeightCurve, meshSimplify
+            );
+>>>>>>> bd748339cecc843cd95c2e31fd0a88d50796b5d8
 
 //             // generate all mesh textures
 //             Color[] colorMap = new Color[colourMapWidth * colourMapWidth];
@@ -67,6 +85,7 @@
 //             }
 //             textureList[x, y] = TextureGenerator.TextureFromColourMap(colorMap, colourMapWidth, colourMapWidth);
 
+<<<<<<< HEAD
 //             // Create all map chunks
 //             GameObject mapChunk = new GameObject("mapChunk[ "+x+" , "+(mapSize-y)+" ]");
 //             mapChunk.transform.SetParent(map.transform);
@@ -79,6 +98,20 @@
 //             meshRenderer.sharedMaterial.mainTexture = textureList[x, y];
 //         }
 //     }
+=======
+            // Create all map chunks
+            GameObject mapChunk = new GameObject("mapChunk[ "+localOffset.x+" , "+localOffset.y+" ]");
+            mapChunk.transform.SetParent(map.transform);
+            mapChunk.transform.position = new Vector3(x*mapChunkSize, 0, (mapSize-y)*mapChunkSize);
+            MeshFilter meshFilter = mapChunk.AddComponent<MeshFilter>();
+            meshFilter.sharedMesh = meshList[x, y].CreateMesh();
+            MeshCollider meshCollider = mapChunk.AddComponent<MeshCollider>();
+            MeshRenderer meshRenderer = mapChunk.AddComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            meshRenderer.sharedMaterial.mainTexture = textureList[x, y];
+        }
+    }
+>>>>>>> bd748339cecc843cd95c2e31fd0a88d50796b5d8
 
 //     private float[,] clipNoiseMap(float[,] noiseMap, int startX, int startY, int len){
 //         float[,] newMap = new float[len, len];

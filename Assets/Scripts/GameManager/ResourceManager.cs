@@ -28,6 +28,7 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject[] resourcesObject;
 
+    /// <summary>When character death!</summary>
     public void InstantiateResources(Vector3 pos, int[] resources)
     {
         for (int i = 0; i < GetResourcesLength; i++)

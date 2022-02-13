@@ -2018,6 +2018,7 @@ MonoBehaviour:
   directionalLight: {fileID: 1356670746}
   preset: {fileID: 11400000, guid: 95afca68b6365f640955c32e0fbe94b8, type: 2}
   timeOfDay: 12
+  isWorkingTime: 0
 --- !u!114 &235521895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9765,7 +9766,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029603707}
-  m_LocalRotation: {x: -0.0020090996, y: 0.98836255, z: -0.15153795, w: -0.013103771}
+  m_LocalRotation: {x: -0.0020091024, y: 0.98836255, z: -0.15153795, w: -0.013103788}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -20435,12 +20436,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 645467599, guid: 656504b3a504903438a1664297ebc083, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.4800005
+      objectReference: {fileID: 0}
+    - target: {fileID: 645467599, guid: 656504b3a504903438a1664297ebc083, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.013103771
       objectReference: {fileID: 0}
     - target: {fileID: 645467599, guid: 656504b3a504903438a1664297ebc083, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.0020090998
+      objectReference: {fileID: 0}
+    - target: {fileID: 645467599, guid: 656504b3a504903438a1664297ebc083, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.15153797
       objectReference: {fileID: 0}
     - target: {fileID: 852624897, guid: 656504b3a504903438a1664297ebc083, type: 3}
       propertyPath: m_IsActive

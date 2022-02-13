@@ -8,14 +8,14 @@ public class MapGenerator : MonoBehaviour {
 
 	public enum DrawMode {NoiseMap, ColourMap, Mesh, FalloffMap};
 	public DrawMode drawMode;
+	public bool useFlatShading;
+    public bool useFalloff;
+
+	public float meshHeightMultiplier;
+	public AnimationCurve meshHeightCurve;
 
 	public Noise.NormalizeMode normalizeMode;
-
-	public bool useFlatShading;
-
-	[Range(0,6)]
-	public int editorPreviewLOD;
-	public float noiseScale;
+    public float noiseScale;
 
 	public int octaves;
 	[Range(0,1)]
@@ -25,10 +25,9 @@ public class MapGenerator : MonoBehaviour {
 	public int seed;
 	public Vector2 offset;
 
-	public bool useFalloff;
-
-	public float meshHeightMultiplier;
-	public AnimationCurve meshHeightCurve;
+	[Range(0,6)]
+	public int editorPreviewLOD;
+	
 
 	public bool autoUpdate;
 

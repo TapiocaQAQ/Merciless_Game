@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshSimplify: 0
-  textureDetail: 4
+  textureDetail: 1
   noiseScale: 64
   octaves: 4
   persistance: 0
